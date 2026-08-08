@@ -20,9 +20,9 @@ export const siteConfig = {
   legalName: "Rudra Guruji Naga Sadhu Charitable Trust",
   phone: "+91 80087 21696",
   address: "Narayanpet District, Telangana, India",
-  // TODO: the trust has not supplied an email address yet — this is a guess and
-  // will bounce. Replace it, or remove the mailto links, before going live.
-  email: "seva@rudragurujitrust.org",
+  /** The trust's own address, supplied 2026-08-08. Reached from the footer,
+   *  the donate page, the donate QR card and the volunteer page. */
+  email: "rudragurujisevatrust@gmail.com",
   upi: {
     vpa: "9581916714@ybl",
     /**

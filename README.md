@@ -83,14 +83,15 @@ supabase/
 | UPI ID              | `src/lib/site.ts` → `siteConfig.upi.vpa`     | ✅ `9581916714@ybl` |
 | Phone               | `src/lib/site.ts` → `siteConfig.phone`       | ✅ +91 80087 21696 |
 | Address             | `src/lib/site.ts` → `siteConfig.address`     | ⚠️ District only — add village/street |
-| **Email**           | `src/lib/site.ts` → `siteConfig.email`       | ❌ **Still a placeholder — it will bounce** |
+| Email               | `src/lib/site.ts` → `siteConfig.email`       | ✅ `rudragurujisevatrust@gmail.com` |
 | Impact statistics   | `src/lib/placeholder-data.ts` → `statValues` | ⚠️ Invented figures |
 | Events-feed art     | `public/placeholders/`                       | ⚠️ The *gallery* uses real photos; the feed does not |
 | Translated copy     | `src/lib/i18n/dictionaries/`                 | ⚠️ Have a native speaker review |
 
-> **The email address is a guess** (`seva@rudragurujitrust.org`) and appears as a
-> `mailto:` link in the footer, on the Donate page and on the Volunteer page.
-> Replace it or remove those links before launch.
+> **Email:** `rudragurujisevatrust@gmail.com`, supplied by the trust on
+> 2026-08-08. It appears as a `mailto:` link in the footer, on the Donate page
+> (twice — the page body and the QR card) and on the Volunteer page. All four
+> read `siteConfig.email`, so changing it in one place changes it everywhere.
 
 > **UPI note:** `9581916714@ybl` is a PhonePe handle tied to a phone number.
 > UPI apps display the name registered against the VPA, not the `payeeName` in
