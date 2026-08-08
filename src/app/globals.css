@@ -265,6 +265,99 @@ html[lang="kn"] {
       );
   }
 
+  /*
+   * The hero photograph — Guruji at tapas in the Himalayas — laid behind the
+   * words. Three things make it read as a fresco on the parchment instead of
+   * a photo in a box:
+   *
+   *   the plate is centred and capped, so a portrait frame keeps its own
+   *   proportions on a wide screen rather than being cropped to a letterbox;
+   *   the mask feathers all four edges to nothing and thins the middle, where
+   *   the headline and the intro sit, which is what keeps muted body text at
+   *   its usual contrast; and the grade warms the photograph's cold blues
+   *   toward the sandal and saffron the rest of the page is built from.
+   */
+  .hero-darshan {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  /*
+   * The lower third of the photograph is the guru's robe — the darkest part of
+   * the frame, and exactly where the impact figures and their small labels
+   * sit. This scrim lifts it back toward the parchment (labels hold 5:1 rather
+   * than 3.8:1) and lets the hero dissolve into the section below instead of
+   * ending on a cut edge.
+   */
+  .hero-darshan::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      color-mix(in oklab, var(--background) 38%, transparent) 74%,
+      color-mix(in oklab, var(--background) 80%, transparent) 92%,
+      color-mix(in oklab, var(--background) 94%, transparent) 100%
+    );
+  }
+
+  .hero-darshan-plate {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    max-width: 68rem;
+    opacity: 0.36;
+    filter: sepia(0.3) saturate(1.25) contrast(1.02);
+    /*
+     * Alpha stops, outward from the centre: thinned core, full ring, feather.
+     * The horizontal radius is held at 50% so the feather reaches nothing by
+     * the plate's own left and right edges — anything wider leaves the
+     * photograph ending on two visible vertical seams.
+     */
+    --darshan-mask: radial-gradient(
+      ellipse 50% 78% at 50% 42%,
+      rgb(0 0 0 / 0.26) 0%,
+      rgb(0 0 0 / 0.38) 30%,
+      rgb(0 0 0 / 1) 62%,
+      rgb(0 0 0 / 0.5) 86%,
+      transparent 100%
+    );
+    -webkit-mask-image: var(--darshan-mask);
+    mask-image: var(--darshan-mask);
+  }
+
+  /* Nested inside the plate's opacity, so this fades in to 0.36, not to 1. */
+  .hero-darshan-photo {
+    animation: darshan-settle 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* The peaks settle into place once, on load. */
+  @keyframes darshan-settle {
+    from {
+      opacity: 0;
+      transform: scale(1.06);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /*
+   * On the dark palette the snowfield is the bright thing on the page and the
+   * type is the pale thing, so the photograph is dimmed rather than warmed.
+   */
+  .dark .hero-darshan-plate {
+    opacity: 0.28;
+    filter: sepia(0.26) saturate(1.05) brightness(0.62) contrast(1.05);
+  }
+
   /* Repeating scallop, like a temple torana / mango-leaf toran. */
   .border-toran {
     background-image: radial-gradient(

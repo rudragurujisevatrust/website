@@ -1,4 +1,5 @@
 import { ArrowRight, HeartHandshake } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -16,8 +17,30 @@ export function Hero({
   const stats = getTrustStats(dict);
 
   return (
-    <section className="glow-diya relative overflow-hidden border-b border-gold/30">
-      <div className="mx-auto max-w-5xl px-6 py-16 text-center sm:py-24">
+    <section className="glow-diya relative isolate overflow-hidden border-b border-gold/30">
+      {/*
+       * Guruji's tapas in the Himalayas, held behind the words as a fresco
+       * rather than a photograph: graded warm, feathered away at every edge,
+       * and thinned through the middle so the text keeps its contrast. It is
+       * decorative here — the gallery presents the same photograph with its
+       * caption — so it stays out of the accessibility tree.
+       */}
+      <div aria-hidden className="hero-darshan">
+        <div className="hero-darshan-plate">
+          <Image
+            src="/gallery/himalaya-tapas.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1088px) 68rem, 100vw"
+            className="hero-darshan-photo object-cover object-[center_20%]"
+          />
+        </div>
+      </div>
+
+      {/* py-32 from sm up: the extra height is what lets the ridge line clear
+          the headline instead of being cropped down to a band of snow. */}
+      <div className="relative mx-auto max-w-5xl px-6 py-16 text-center sm:py-32">
         <p className="font-heading text-2xl text-saffron-deep sm:text-3xl">
           {dict.brand.mantra}
         </p>
