@@ -102,10 +102,25 @@ supabase/
 
 ## Sharing, SEO and accessibility
 
-**`NEXT_PUBLIC_SITE_URL` must be set at build time in production.** It is the
-origin used for Open Graph image URLs and the sitemap; social apps reject
-relative paths, so without it link previews break. It falls back to
-`http://localhost:3001` for local work.
+**The canonical origin resolves itself on Vercel.** `SITE_URL` in
+`src/lib/site.ts` prefers `NEXT_PUBLIC_SITE_URL` if you set one, otherwise
+falls back to `VERCEL_PROJECT_PRODUCTION_URL` — the project's production
+domain, which Vercel injects at build time and which becomes your custom
+domain automatically once you attach one. Only local builds land on
+`http://localhost:3001`.
+
+> Set `NEXT_PUBLIC_SITE_URL` explicitly only to name a domain that is not yet
+> pointed at Vercel, or when deploying somewhere other than Vercel. Do **not**
+> use `VERCEL_URL` — it is per-deployment and changes on every push, so
+> canonical tags built from it would point at one-off builds.
+>
+> This used to fall back to localhost silently, and it did: the live site
+> shipped for a time with `<link rel="canonical" href="http://localhost:3001/en">`.
+> That is worse than having no canonical at all — it tells Google the real copy
+> of the page is somewhere it cannot reach, so the page is dropped from the
+> index, and every WhatsApp share preview comes out blank. Nothing about the
+> site looks wrong when this happens, which is why it is now derived rather
+> than configured.
 
 - **Share cards** — `public/og/{en,hi,te,kn}.jpg`, 1200×630, built from the
   Himalaya photograph with the trust's name in each script. This matters more
