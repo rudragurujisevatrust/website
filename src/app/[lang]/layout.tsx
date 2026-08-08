@@ -13,6 +13,7 @@ import { AudioToggle } from "@/components/audio/audio-toggle";
 import { DesktopSideNav } from "@/components/layout/side-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { OrganizationJsonLd } from "@/components/seo/organization-jsonld";
 import { Toaster } from "@/components/ui/sonner";
 import { pickChrome } from "@/lib/i18n/chrome";
 import { isLocale, localeMeta, locales } from "@/lib/i18n/config";
@@ -139,6 +140,9 @@ export default async function RootLayout({
             />
           ))}
         <meta name="apple-mobile-web-app-title" content={siteConfig.legalName} />
+        {/* Tells search engines what this organisation is, rather than leaving
+            them to infer it from the prose. */}
+        <OrganizationJsonLd locale={lang} />
       </head>
       <body className="min-h-full">
         {/*
