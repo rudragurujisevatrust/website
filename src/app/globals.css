@@ -1,0 +1,294 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Devotional palette — usable as bg-saffron, text-kumkum, border-gold, ... */
+  --color-saffron: var(--saffron);
+  --color-saffron-deep: var(--saffron-deep);
+  --color-kumkum: var(--kumkum);
+  --color-maroon: var(--maroon);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-sandal: var(--sandal);
+  --color-turmeric: var(--turmeric);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /*
+   * Script-aware typography. Marcellus (display) covers Latin only, and Mukta
+   * covers Latin + Devanagari, so Telugu and Kannada fall back to their Noto
+   * face for both headings and body. Setting these here — rather than letting
+   * next/font name a variable `--font-body` directly — keeps the html element's
+   * font classes and these overrides from colliding on equal specificity.
+   */
+  --font-display: var(--font-latin-display);
+  --font-body: var(--font-latin-body);
+
+  /* Raw devotional hues */
+  --saffron: oklch(0.685 0.176 52);
+  --saffron-deep: oklch(0.595 0.185 44);
+  --kumkum: oklch(0.485 0.185 27);
+  --maroon: oklch(0.335 0.11 25);
+  --gold: oklch(0.755 0.135 82);
+  --gold-soft: oklch(0.875 0.075 87);
+  --sandal: oklch(0.945 0.032 82);
+  --turmeric: oklch(0.815 0.145 88);
+
+  /* Semantic tokens */
+  --background: oklch(0.977 0.016 82);
+  --foreground: oklch(0.265 0.048 38);
+  --card: oklch(0.993 0.009 86);
+  --card-foreground: oklch(0.265 0.048 38);
+  --popover: oklch(0.993 0.009 86);
+  --popover-foreground: oklch(0.265 0.048 38);
+  --primary: oklch(0.625 0.19 47);
+  --primary-foreground: oklch(0.99 0.012 86);
+  --secondary: oklch(0.935 0.038 78);
+  --secondary-foreground: oklch(0.355 0.09 34);
+  --muted: oklch(0.945 0.025 80);
+  --muted-foreground: oklch(0.495 0.055 42);
+  --accent: oklch(0.905 0.062 82);
+  --accent-foreground: oklch(0.315 0.075 36);
+  --destructive: oklch(0.505 0.19 27);
+  --border: oklch(0.882 0.032 76);
+  --input: oklch(0.882 0.032 76);
+  --ring: oklch(0.625 0.19 47);
+  --chart-1: oklch(0.685 0.176 52);
+  --chart-2: oklch(0.755 0.135 82);
+  --chart-3: oklch(0.485 0.185 27);
+  --chart-4: oklch(0.595 0.12 130);
+  --chart-5: oklch(0.335 0.11 25);
+  --radius: 0.625rem;
+
+  /* Sidebar reads as a temple wall: deep maroon with gold script */
+  --sidebar: oklch(0.305 0.088 29);
+  --sidebar-foreground: oklch(0.945 0.028 80);
+  --sidebar-primary: oklch(0.755 0.155 62);
+  --sidebar-primary-foreground: oklch(0.245 0.06 32);
+  --sidebar-accent: oklch(0.375 0.095 31);
+  --sidebar-accent-foreground: oklch(0.965 0.03 80);
+  --sidebar-border: oklch(0.415 0.085 33);
+  --sidebar-ring: oklch(0.755 0.155 62);
+}
+
+/* Hindi keeps Mukta for body but cannot use Marcellus for headings. */
+html[lang="hi"] {
+  --font-display: var(--font-latin-body);
+}
+
+html[lang="te"] {
+  --font-display: var(--font-telugu);
+  --font-body: var(--font-telugu);
+}
+
+html[lang="kn"] {
+  --font-display: var(--font-kannada);
+  --font-body: var(--font-kannada);
+}
+
+/*
+ * Devanagari, Telugu and Kannada stack vowel signs above and below the
+ * baseline, so the tight leading and negative tracking that suit Latin clip
+ * them. These rules sit outside @layer deliberately: unlayered CSS beats
+ * Tailwind's layered utilities, so they raise the floor without !important
+ * and without touching the English pages.
+ */
+:is(html[lang="hi"], html[lang="te"], html[lang="kn"]) :is(h1, h2, h3, h4) {
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+:is(html[lang="hi"], html[lang="te"], html[lang="kn"]) .leading-tight {
+  line-height: 1.5;
+}
+:is(html[lang="hi"], html[lang="te"], html[lang="kn"]) .leading-snug {
+  line-height: 1.6;
+}
+
+.dark {
+  --saffron: oklch(0.72 0.17 55);
+  --saffron-deep: oklch(0.635 0.18 46);
+  --kumkum: oklch(0.575 0.18 28);
+  --maroon: oklch(0.395 0.105 26);
+  --gold: oklch(0.795 0.13 84);
+  --gold-soft: oklch(0.66 0.09 84);
+  --sandal: oklch(0.325 0.03 70);
+  --turmeric: oklch(0.835 0.14 88);
+
+  --background: oklch(0.185 0.028 44);
+  --foreground: oklch(0.945 0.024 80);
+  --card: oklch(0.235 0.035 40);
+  --card-foreground: oklch(0.945 0.024 80);
+  --popover: oklch(0.235 0.035 40);
+  --popover-foreground: oklch(0.945 0.024 80);
+  --primary: oklch(0.72 0.17 55);
+  --primary-foreground: oklch(0.205 0.045 38);
+  --secondary: oklch(0.305 0.045 38);
+  --secondary-foreground: oklch(0.945 0.024 80);
+  --muted: oklch(0.295 0.038 40);
+  --muted-foreground: oklch(0.735 0.038 74);
+  --accent: oklch(0.345 0.06 42);
+  --accent-foreground: oklch(0.955 0.028 80);
+  --destructive: oklch(0.635 0.185 26);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.17 55);
+  --chart-1: oklch(0.72 0.17 55);
+  --chart-2: oklch(0.795 0.13 84);
+  --chart-3: oklch(0.575 0.18 28);
+  --chart-4: oklch(0.655 0.12 130);
+  --chart-5: oklch(0.395 0.105 26);
+
+  --sidebar: oklch(0.225 0.05 32);
+  --sidebar-foreground: oklch(0.935 0.026 80);
+  --sidebar-primary: oklch(0.775 0.15 62);
+  --sidebar-primary-foreground: oklch(0.205 0.05 32);
+  --sidebar-accent: oklch(0.305 0.062 31);
+  --sidebar-accent-foreground: oklch(0.955 0.028 80);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.775 0.15 62);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  /*
+   * Subtle temple texture. Two layers painted with gradients only (no image
+   * requests): a woven diagonal weft, and a grid of soft kumkum dots. Kept
+   * under 4% alpha so text contrast is untouched.
+   */
+  .texture-temple {
+    position: relative;
+    isolation: isolate;
+  }
+  .texture-temple::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        color-mix(in oklab, var(--saffron) 4%, transparent) 0 2px,
+        transparent 2px 9px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        color-mix(in oklab, var(--kumkum) 3%, transparent) 0 2px,
+        transparent 2px 9px
+      ),
+      radial-gradient(
+        circle at center,
+        color-mix(in oklab, var(--gold) 16%, transparent) 0 1.5px,
+        transparent 2px
+      );
+    background-size:
+      26px 26px,
+      26px 26px,
+      34px 34px;
+  }
+
+  /* Warm glow used behind hero sections and the donate card. */
+  .glow-diya {
+    background-image:
+      radial-gradient(
+        ellipse 70% 55% at 50% 0%,
+        color-mix(in oklab, var(--turmeric) 30%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 85% 20%,
+        color-mix(in oklab, var(--saffron) 22%, transparent),
+        transparent 70%
+      );
+  }
+
+  /* Repeating scallop, like a temple torana / mango-leaf toran. */
+  .border-toran {
+    background-image: radial-gradient(
+      circle at 50% 0%,
+      var(--gold) 0 6px,
+      transparent 6px
+    );
+    background-size: 18px 12px;
+    background-repeat: repeat-x;
+  }
+}
+
+@utility text-balance-pretty {
+  text-wrap: pretty;
+}
+
+/* Respect users who ask the OS for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
