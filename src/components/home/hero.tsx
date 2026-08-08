@@ -16,8 +16,14 @@ export function Hero({
 }) {
   const stats = getTrustStats(dict);
 
+  /*
+   * The section fills the screen below the 4rem header, so the photograph
+   * reaches the fold instead of stopping short on a tall monitor. min-height,
+   * not height: on a phone, or in any locale whose headline wraps to more
+   * lines, the content is taller than the screen and simply pushes past it.
+   */
   return (
-    <section className="glow-diya relative isolate overflow-hidden border-b border-gold/30">
+    <section className="glow-diya relative isolate flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden border-b border-gold/30">
       {/*
        * Guruji's tapas in the Himalayas, held behind the words as a fresco
        * rather than a photograph: graded warm, feathered away at every edge,
