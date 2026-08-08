@@ -358,6 +358,40 @@ html[lang="kn"] {
     filter: sepia(0.26) saturate(1.05) brightness(0.62) contrast(1.05);
   }
 
+  /*
+   * The opening gate's emblem sits in a slow gold aura — a diya's light rather
+   * than a spotlight. It is painted behind the medallion so the emblem's own
+   * gold ring stays the hard edge, and it breathes at the pace of the chant
+   * the gate is about to start.
+   */
+  .gate-aura::before {
+    content: "";
+    position: absolute;
+    inset: -16%;
+    z-index: -1;
+    border-radius: 9999px;
+    background-image: radial-gradient(
+      circle at center,
+      color-mix(in oklab, var(--gold) 55%, transparent) 0%,
+      color-mix(in oklab, var(--saffron) 30%, transparent) 45%,
+      transparent 72%
+    );
+    filter: blur(16px);
+    animation: gate-aura-breathe 5s ease-in-out infinite;
+  }
+
+  @keyframes gate-aura-breathe {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(0.96);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
   /* Repeating scallop, like a temple torana / mango-leaf toran. */
   .border-toran {
     background-image: radial-gradient(

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useBackgroundAudio } from "@/components/audio/audio-provider";
 import type { ChromeDict } from "@/lib/i18n/chrome";
 import { cn } from "@/lib/utils";
@@ -45,11 +47,23 @@ export function AudioGate({
         "animate-in fade-in duration-500",
       )}
     >
-      <span
-        aria-hidden
-        className="flex size-24 items-center justify-center rounded-full border-2 border-gold/70 bg-maroon text-5xl leading-none text-gold shadow-2xl"
-      >
-        ॐ
+      {/*
+       * The trust's emblem, at the size it was drawn for — the medallion
+       * carries the guru, the trident, the temple and the seva icons, and none
+       * of that survives at icon size. It is already a circle on a white
+       * square, so it is clipped rather than framed: rounded-full lands on the
+       * emblem's own gold ring. Decorative — the dialog is labelled, and the
+       * trust's name is spelled out below it.
+       */}
+      <span aria-hidden className="gate-aura relative isolate block">
+        <Image
+          src="/gallery/trust-emblem.jpg"
+          alt=""
+          width={576}
+          height={576}
+          priority
+          className="animate-in fade-in zoom-in-95 size-64 rounded-full object-cover shadow-2xl ring-1 ring-gold/40 duration-700 sm:size-72 lg:size-80"
+        />
       </span>
 
       <p className="font-heading text-2xl text-gold sm:text-3xl">{mantra}</p>
