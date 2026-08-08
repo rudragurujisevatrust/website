@@ -12,8 +12,25 @@ import {
 
 import { AUDIO_TRACK_SRC } from "@/lib/site";
 
-const STORAGE_KEY = "rgst:chant-enabled";
 const DEFAULT_VOLUME = 0.35;
+
+/** Storage key used by earlier builds. Read no longer; cleared on sight. */
+const LEGACY_STORAGE_KEY = "rgst:chant-enabled";
+
+/**
+ * The visitor's choice for the current visit, held in module scope rather than
+ * in localStorage.
+ *
+ * Deliberate. A persisted preference used to outlive the visit forever: anyone
+ * who once tapped pause — or entered without sound — was silent on every later
+ * visit and never even saw the gate again, because the gate renders only while
+ * `isEnabled` is true, and without that gesture prompt no browser will ever
+ * allow the chant to become audible. Module scope resets when the document
+ * loads, so every fresh visit offers the chant, while a pause still holds
+ * across client-side navigation — including a language switch, which remounts
+ * this provider along with the `[lang]` layout.
+ */
+let visitChoice: boolean | null = null;
 
 type AudioState = {
   /** The user wants the chant on. */
@@ -51,17 +68,17 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   /** Mirrors `isEnabled` for handlers that must read it after a state change. */
   const isEnabledRef = useRef(false);
 
-  // Restore the visitor's previous choice. Defaults to on: the chant is part of
-  // the experience on a devotional site.
+  // Default to on: the chant is part of the experience on a devotional site.
   //
-  // This must run after mount rather than in a lazy useState initializer: the
-  // server has no access to localStorage, so reading it during the first render
-  // would make the client markup disagree with the server's and break
-  // hydration. Rendering the default and correcting here is the safe order.
+  // This runs after mount rather than in a lazy useState initializer so the
+  // server renders `false` and the full-screen gate stays out of the SSR HTML.
+  // If the client bundle ever fails to load, that keeps an undismissable
+  // overlay from stranding the visitor on a page they cannot use.
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- see above
-    setIsEnabled(stored === null ? true : stored === "true");
+    setIsEnabled(visitChoice ?? true);
+    // Evict the abandoned key so it cannot resurface in a future debug session.
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
   }, []);
 
   // Single <audio> element created imperatively so it is never torn down by a
@@ -189,7 +206,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const toggle = useCallback(() => {
     setIsEnabled((previous) => {
       const next = !previous;
-      window.localStorage.setItem(STORAGE_KEY, String(next));
+      visitChoice = next;
       return next;
     });
   }, []);

@@ -16,8 +16,10 @@ import { cn } from "@/lib/utils";
  *
  * Visibility is derived, never stored: the gate is on screen exactly while the
  * chant is wanted but silent. The moment audio flows it disappears, and a
- * visitor who chose to enter without sound has `isEnabled` false in
- * localStorage, so it never returns for them on any later visit.
+ * visitor who chose to enter without sound has `isEnabled` false for the rest
+ * of the visit, so it does not return while they browse. It does greet them
+ * again on a later visit — the choice is scoped to the visit on purpose, see
+ * `visitChoice` in audio-provider.tsx.
  */
 export function AudioGate({
   strings,
